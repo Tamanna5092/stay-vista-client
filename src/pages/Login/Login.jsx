@@ -4,9 +4,12 @@ import axios from "axios";
 import useAuth from "../../hooks/useAuth";
 import toast from "react-hot-toast";
 import { TbFidgetSpinner } from "react-icons/tb";
+import { useState } from 'react';
+import { set } from 'date-fns';
 
 const Login = () => {
-    const { signIn,signInWithGoogle, loading, setLoading} = useAuth()
+    const { signIn,signInWithGoogle, loading, setLoading, resetPassword} = useAuth()
+    const [email, setEmail ] = useState('')
     const navigate = useNavigate();
   
     const handleSubmit = async (e) => {
@@ -25,8 +28,24 @@ const Login = () => {
       catch (error) {
         console.error("Error during signIn:", error);
         toast.error(error.message);
+        setLoading(false);
       }
     };
+
+    // Reset password
+    const handleResetPassword = async() => {
+      if(!email) return toast.error('Please enter your email first')
+      try {
+        await resetPassword(email)
+        toast.success('Password reset email sent please check your email')
+        setLoading(false);
+      } catch (error) {
+        console.error("Error during reset password", error);
+        toast.error(error.message);
+        setLoading(false);
+      }
+      console.log('email', email)
+    }
   
     // google signIn
     const handleGoogleSignIn = async () => {
@@ -37,6 +56,7 @@ const Login = () => {
       } catch (error) {
         console.error("Error during Google sign-in", error);
         toast.error(error.message);
+        setLoading(false);
       }
   
     }
@@ -62,6 +82,7 @@ const Login = () => {
               </label>
               <input
                 type='email'
+                onBlur={(e) => setEmail(e.target.value)}
                 name='email'
                 id='email'
                 required
@@ -99,7 +120,7 @@ const Login = () => {
           </div>
         </form>
         <div className='space-y-1'>
-          <button className='text-xs hover:underline hover:text-rose-500 text-gray-400'>
+          <button onClick={handleResetPassword} className='text-xs hover:underline hover:text-rose-500 text-gray-400'>
             Forgot password?
           </button>
         </div>
