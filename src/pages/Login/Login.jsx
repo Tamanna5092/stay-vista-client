@@ -11,6 +11,7 @@ const Login = () => {
     const { signIn,signInWithGoogle, loading, setLoading, resetPassword} = useAuth()
     const [email, setEmail ] = useState('')
     const navigate = useNavigate();
+    const from = location?.state || '/'
   
     const handleSubmit = async (e) => {
       e.preventDefault();
@@ -23,7 +24,7 @@ const Login = () => {
         const result = await signIn(email, password);
         console.log("User signIn", result.user);
         toast.success('User signIn Successfuly')
-        navigate('/')
+        navigate(from)
       }
       catch (error) {
         console.error("Error during signIn:", error);
@@ -51,7 +52,7 @@ const Login = () => {
     const handleGoogleSignIn = async () => {
       try {
         await signInWithGoogle()
-        navigate('/')
+        navigate(from)
         toast.success('User signIn Successfuly')
       } catch (error) {
         console.error("Error during Google sign-in", error);

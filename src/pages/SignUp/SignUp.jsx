@@ -8,6 +8,7 @@ import { TbFidgetSpinner } from "react-icons/tb";
 const SignUp = () => {
   const {createUser, signInWithGoogle, updateUserProfile, loading, setLoading} = useAuth()
   const navigate = useNavigate();
+  const from = location?.state || '/'
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -35,7 +36,7 @@ const SignUp = () => {
 
       // Update user profile with name and image URL
       await updateUserProfile(name, data.data.display_url)
-      navigate('/')
+      navigate(from)
       toast.success('User signup Successfuly')
     }
     catch (error) {
@@ -48,7 +49,7 @@ const SignUp = () => {
   const handleGoogleSignIn = async () => {
     try {
       await signInWithGoogle()
-      navigate('/')
+      navigate(from)
       toast.success('User signIn Successfuly')
     } catch (error) {
       console.error("Error during Google sign-in", error);
