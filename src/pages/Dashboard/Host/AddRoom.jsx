@@ -2,14 +2,23 @@ import React, { useState } from "react";
 import AddRoomForm from "../../../components/Form/AddRoomForm";
 import useAuth from "../../../hooks/useAuth";
 import { imageUpload } from "../../../api/utils";
+import { Helmet } from "react-helmet-async";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import { useMutation } from '@tanstack/react-query';
+import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
+
 
 const AddRoom = () => {
+  const navigate = useNavigate();
   const { user } = useAuth();
+  const axiosSecure = useAxiosSecure();
+  const [loading, setLoading] = useState(false);
   const [imagePreview, setImagePreview] = useState();
   const [imageText, setImageText] = useState("Upload Image");
   const [dates, setDates] = useState({
     startDate: new Date(),
-    endDate: null,
+    endDate: new Date(),
     key: "selection",
   });
 
@@ -18,7 +27,20 @@ const AddRoom = () => {
     setDates(item.selection);
   };
 
+  const { mutateAsync } = useMutation({
+    mutationFn: async (roomData) => {
+      const {data} = await axiosSecure.post(`/room`, roomData)
+      return data
+    },
+    onSuccess: () => {
+      toast.success("Room data added successfully");
+      navigate('/dashboard/my-listings')
+      setLoading(false);
+    }
+  })
+
   const handleSubmit = async (e) => {
+    setLoading(true);
     e.preventDefault();
     const form = e.target;
     const location = form.location.value;
@@ -57,8 +79,14 @@ const AddRoom = () => {
         host,
       };
       console.table(roomData);
-    } catch (error) {}
-    console.log(error)
+      await mutateAsync(roomData)
+
+    } catch (error) {
+      console.log(error.message)
+      toast.error("Failed to add room data");
+      setLoading(false);
+    }
+    
   };
 
     // Handle image change
@@ -69,6 +97,9 @@ const AddRoom = () => {
 
   return (
     <div>
+      <Helmet>
+        <title>Add Room | Dashboard</title>
+      </Helmet>
       <AddRoomForm
         dates={dates}
         handleDates={handleDates}
