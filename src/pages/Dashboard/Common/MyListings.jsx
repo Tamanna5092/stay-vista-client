@@ -1,9 +1,11 @@
 import { Helmet } from "react-helmet-async";
 import useAuth from "../../../hooks/useAuth";
 import LoadingSpinner from "../../../components/Shared/LoadingSpinner";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import RoomDataRow from "../../../components/Dashboard/TablesRow/RoomDataRow";
+import toast from "react-hot-toast";
+import { data } from "autoprefixer";
 
 const MyListings = () => {
   const { user } = useAuth();
@@ -19,6 +21,28 @@ const MyListings = () => {
       return data;
     },
   });
+
+  const { mutateAsync } = useMutation({
+    mutationFn: async (id) => {
+      const { data } = await axiosSecure.delete(`/room/${id}`);
+      return data;
+    },
+    onSuccess: (data) => {
+      console.log(data)
+      toast.success("Room deleted successfully");
+      refetch()
+    },
+  });
+
+  //handle delete action
+  const handleDetete = async (id) => {
+    console.log("Delete functionality not implemented yet", id);
+    try {
+      await mutateAsync(id);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
 
   if (isLoading) return <LoadingSpinner />;
 
@@ -85,7 +109,8 @@ const MyListings = () => {
                     <RoomDataRow
                       key={room._id}
                       room={room}
-                      refetch={refetch}
+                      handleDelete={handleDetete}
+                      id={room._id}
                     ></RoomDataRow>
                   ))}
                 </tbody>
