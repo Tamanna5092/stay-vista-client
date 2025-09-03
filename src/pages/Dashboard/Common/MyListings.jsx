@@ -5,7 +5,6 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import RoomDataRow from "../../../components/Dashboard/TablesRow/RoomDataRow";
 import toast from "react-hot-toast";
-import { data } from "autoprefixer";
 
 const MyListings = () => {
   const { user } = useAuth();
