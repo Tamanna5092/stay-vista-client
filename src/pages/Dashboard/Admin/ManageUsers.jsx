@@ -6,7 +6,7 @@ import LoadingSpinner from "../../../components/Shared/LoadingSpinner";
 import UserDataRow from "../../../components/Dashboard/TablesRow/UserDataRow";
 
 const ManageUsers = () => {
-  //   const { user } = useAuth();
+    const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
   const {
     data: users = [],
@@ -16,7 +16,6 @@ const ManageUsers = () => {
     queryKey: ["users"],
     queryFn: async () => {
       const { data } = await axiosSecure(`users`);
-      console.log(data);
       return data;
     },
   });
