@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { GrLogout } from "react-icons/gr";
-import { FcSettings } from "react-icons/fc"; 
+import { FcSettings } from "react-icons/fc";
 import { AiOutlineBars } from "react-icons/ai";
 import { BsGraphUp } from "react-icons/bs";
 import useAuth from "../../../hooks/useAuth";
@@ -10,9 +10,11 @@ import MenuItem from "./Menu/MenuItem";
 import HostMenu from "./Menu/HostMenu";
 import GuestMenu from "./Menu/GuestMenu";
 import AdminMenu from "./Menu/AdminMenu";
+import ToggleBtn from "../../Shared/Button/ToggleBtn";
 
 const Sidebar = () => {
   const { logOut } = useAuth();
+  const [toggle, setToggle] = useState(false);
   const [role, isLoading] = useRole();
   console.log("role from sidebar", role);
   const [isActive, setActive] = useState(false);
@@ -21,6 +23,15 @@ const Sidebar = () => {
   const handleToggle = () => {
     setActive(!isActive);
   };
+
+  const toggleHandler = () => {
+    // setToggle(event.target.checked);
+    // console.log("Toggle value", event.target.checked);
+    setToggle(!toggle);
+    console.log("Toggle value", !toggle);
+  };
+
+
   return (
     <>
       {/* Small Screen Navbar */}
@@ -71,7 +82,7 @@ const Sidebar = () => {
           {/* Nav Items */}
           <div className="flex flex-col justify-between flex-1 mt-6">
             {/* Conditional toggle button here.. */}
-
+            {role === "host" && <ToggleBtn toggleHandler={toggleHandler} toggle={toggle} />}
             {/*  Menu Items */}
             <nav>
               {/* Statistics */}
@@ -81,9 +92,9 @@ const Sidebar = () => {
                 label={"Statistics"}
               />
               {/* Menu */}
-              {role === 'guest' && <GuestMenu />}
-              {role === 'host' && <HostMenu />}
-              {role === 'admin' && <AdminMenu />}
+              {role === "guest" && <GuestMenu />}
+              {role === "host" ? toggle? <HostMenu /> : <GuestMenu></GuestMenu> : undefined}
+              {role === "admin" && <AdminMenu />}
             </nav>
           </div>
         </div>
