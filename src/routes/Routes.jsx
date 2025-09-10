@@ -14,6 +14,8 @@ import ManageUsers from "../pages/Dashboard/Admin/ManageUsers";
 import PrivateRoute from "./PrivateRoute";
 import AdminRoute from "./AdminRoute";
 import HostRoute from "./HostRoute";
+import MyBookings from "../pages/Dashboard/Guest/MyBooking";
+import ManageBookings from "../pages/Dashboard/Host/ManageBookings";
 
 export const router = createBrowserRouter([
   {
@@ -74,12 +76,30 @@ export const router = createBrowserRouter([
         ),
       },
       {
+        path: "manage-bookings",
+        element: (
+          <PrivateRoute>
+            <HostRoute>
+              <ManageBookings />
+            </HostRoute>
+          </PrivateRoute>
+        ),
+      },
+      {
         path: "manage-users",
         element: (
           <PrivateRoute>
             <AdminRoute>
               <ManageUsers />
             </AdminRoute>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "my-bookings",
+        element: (
+          <PrivateRoute> 
+              <MyBookings />
           </PrivateRoute>
         ),
       },

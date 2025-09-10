@@ -3,23 +3,29 @@ import Button from "../Shared/Button/Button";
 import { DateRange } from "react-date-range";
 import { useState } from "react";
 import { differenceInCalendarDays } from "date-fns";
+import BookingModal from "../Modal/BookingModal";
+import useAuth from "../../hooks/useAuth";
 
 const RoomReservation = ({ room }) => {
-  console.log("startDate", new Date(room.from).toLocaleString());
-  console.log("endDate", new Date(room.to).toLocaleString());
+  const { user } = useAuth()
+  const [isOpen, setIsOpen] = useState(false);
   const [state, setState] = useState([
     {
       startDate: new Date(room.from),
-      endDate:  new Date(room.to),
-      key: 'selection'
-    }
+      endDate: new Date(room.to),
+      key: "selection",
+    },
   ]);
 
   // total price * day
-  const totalPrice = parseInt(
-    differenceInCalendarDays(new Date(room.to), new Date(room.from))
-  ) * room?.price;
+  const totalPrice =
+    parseInt(differenceInCalendarDays(new Date(room.to), new Date(room.from))) *
+    room?.price;
   console.log("totalPrice", totalPrice);
+
+  const closeModal = () => {
+    setIsOpen(false);
+  };
 
   return (
     <div className="rounded-xl border-[1px] border-neutral-200 overflow-hidden bg-white">
@@ -38,10 +44,10 @@ const RoomReservation = ({ room }) => {
             console.log("onChange", item);
             setState([
               {
-              startDate: new Date(room.from),
-              endDate: new Date(room.to),
-              key: "selection",
-            }
+                startDate: new Date(room.from),
+                endDate: new Date(room.to),
+                key: "selection",
+              },
             ]);
           }}
           moveRangeOnFirstSelection={false}
@@ -50,8 +56,14 @@ const RoomReservation = ({ room }) => {
       </div>
       <hr />
       <div className="p-4">
-        <Button label={"Reserve"} />
+        <Button onClick={() => setIsOpen(true)} label={"Reserve"} />
       </div>
+      {/* modal */}
+      <BookingModal
+        isOpen={isOpen}
+        closeModal={closeModal}
+        bookingInfo={{ ...room, price: totalPrice, guest: {name: user?.displayName}}}
+      />
       <hr />
       <div className="p-4 flex items-center justify-between font-semibold text-lg">
         <div>Total</div>

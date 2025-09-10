@@ -63,7 +63,7 @@ const RoomDetails = () => {
                     height='30'
                     width='30'
                     alt='Avatar'
-                    src={room?.host?.image}
+                    src={room?.host?.photoURL}
                   />
                 </div>
                 <div

@@ -2,11 +2,52 @@ import useAuth from "../../../hooks/useAuth";
 import { Helmet } from "react-helmet-async";
 import useRole from "../../../hooks/useRole";
 import LoadingSpinner from "../../../components/Shared/LoadingSpinner";
+import { imageUpload } from "../../../api/utils";
+import UpdateProfileModal from "../../../components/Modal/UpdateProfileModal";
+import { useState } from "react";
+import toast from "react-hot-toast";
+import ResetPasswordModal from "../../../components/Modal/ResetPasswordModal";
 
 const Profile = () => {
-  const { user, loading } = useAuth();
-  const [role, isLoading] = useRole()
-  console.log(user);
+  const { user, loading, setLoading, updateUserProfile, resetPassword } =
+    useAuth();
+  const [role, isLoading] = useRole();
+  const [isOpen, setIsOpen] = useState(false);
+  const [name, setName] = useState(user?.displayName || "");
+  const [image, setImage] = useState(null);
+  const [isOpenPassword, setIsOpenPassword] = useState(false);
+
+  const handleImage = (e) => {
+    const file = e.target.files[0];
+    setImage(file);
+  };
+
+  const handleUpdateProfile = async () => {
+    try {
+      const image_url = await imageUpload(image);
+      await updateUserProfile(name, image_url);
+      toast.success("Profile updated successfully");
+      return setIsOpen(false);
+    } catch (error) {
+      console.log(error);
+      toast.error("Failed to update profile");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleResetPassword = async () => {
+    try {
+      await resetPassword(user?.email);
+      toast.success("Password reset email sent");
+      return setIsOpenPassword(false);
+    } catch (error) {
+      console.log(error);
+      toast.error("Failed to send password reset email");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   if (isLoading || loading) return <LoadingSpinner />;
 
@@ -50,12 +91,35 @@ const Profile = () => {
               </p>
 
               <div>
-                <button className="bg-[#F43F5E] px-10 py-1 rounded-lg text-white cursor-pointer hover:bg-[#af4053] block mb-1">
+                <button
+                  onClick={() => setIsOpen(true)}
+                  className="bg-[#F43F5E] px-10 py-1 rounded-lg text-white cursor-pointer hover:bg-[#af4053] block mb-1"
+                >
                   Update Profile
                 </button>
-                <button className="bg-[#F43F5E] px-7 py-1 rounded-lg text-white cursor-pointer hover:bg-[#af4053]">
+                {/* modal for update profile */}
+                <UpdateProfileModal
+                  isOpen={isOpen}
+                  setIsOpen={setIsOpen}
+                  user={user}
+                  handleUpdateProfile={handleUpdateProfile}
+                  name={name}
+                  setName={setName}
+                  handleImage={handleImage}
+                />
+                <button
+                  onClick={() => setIsOpenPassword(true)}
+                  className="bg-[#F43F5E] px-7 py-1 rounded-lg text-white cursor-pointer hover:bg-[#af4053]"
+                >
                   Change Password
                 </button>
+                {/* modal for reset password */}
+                <ResetPasswordModal
+                  isOpen={isOpenPassword}
+                  setIsOpen={setIsOpenPassword}
+                  user={user}
+                  handleResetPassword={handleResetPassword}
+                />
               </div>
             </div>
           </div>
