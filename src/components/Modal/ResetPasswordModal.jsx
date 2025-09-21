@@ -1,5 +1,4 @@
 import { Dialog, DialogPanel } from "@headlessui/react";
-import { TbFidgetSpinner } from "react-icons/tb";
 
 const ResetPasswordModal = ({
   isOpen,
