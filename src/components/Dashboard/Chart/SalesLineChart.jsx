@@ -32,7 +32,7 @@ const SalesLineChart = ({ data }) => {
         <>
           <div className="flex justify-center my-auto">
             <p className="text-2xl font-bold">
-              No data available for this section!
+              Not enough data available for this section!
             </p>
           </div>
         </>
