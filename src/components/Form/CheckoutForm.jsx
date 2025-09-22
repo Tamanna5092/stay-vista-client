@@ -95,6 +95,9 @@ const CheckoutForm = ( {bookingInfo, closeModal, refetch} ) => {
       try {
         const {data} = await axiosSecure.post('/booking', paymentInfo)
         console.log("after payment booking", data)
+
+        await axiosSecure.patch(`/room/status/${bookingInfo?._id}`,
+          {status: true})
         // update ui
         refetch()
         closeModal()

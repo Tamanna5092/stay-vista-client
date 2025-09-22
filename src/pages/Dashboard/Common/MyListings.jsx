@@ -34,7 +34,7 @@ const MyListings = () => {
   });
 
   //handle delete action
-  const handleDetete = async (id) => {
+  const handleDelete = async (id) => {
     console.log("Delete functionality not implemented yet", id);
     try {
       await mutateAsync(id);
@@ -108,7 +108,7 @@ const MyListings = () => {
                     <RoomDataRow
                       key={room._id}
                       room={room}
-                      handleDelete={handleDetete}
+                      handleDelete={handleDelete}
                       id={room._id}
                     ></RoomDataRow>
                   ))}
