@@ -109,7 +109,7 @@ const MyListings = () => {
                       key={room._id}
                       room={room}
                       handleDelete={handleDelete}
-                      id={room._id}
+                      refetch={refetch}
                     ></RoomDataRow>
                   ))}
                 </tbody>
