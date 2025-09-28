@@ -21,12 +21,12 @@ const Login = () => {
         setLoading(true);
         // singIn with email and password
         const result = await signIn(email, password);
-        console.log("User signIn", result.user);
+        // console.log("User signIn", result.user);
         toast.success('User signIn Successfuly')
         navigate(from)
       }
       catch (error) {
-        console.error("Error during signIn:", error);
+        // console.error("Error during signIn:", error);
         toast.error(error.message);
         setLoading(false);
       }
@@ -44,7 +44,7 @@ const Login = () => {
         toast.error(error.message);
         setLoading(false);
       }
-      console.log('email', email)
+      // console.log('email', email)
     }
   
     // google signIn

@@ -26,7 +26,7 @@ const CheckoutForm = ( {bookingInfo, closeModal, refetch} ) => {
 
   const getClientSectet = async (price) => {
     const { data } = await axiosSecure.post('/create-payment-intent', price )
-    console.log("clientSecret", data)
+    // console.log("clientSecret", data)
     setClientSecret(data.clientSecret)
   }
 
@@ -56,11 +56,11 @@ const CheckoutForm = ( {bookingInfo, closeModal, refetch} ) => {
     });
 
     if (error) {
-      console.log("[error]", error);
+      // console.log("[error]", error);
       setCardError(error.message)
       return
     } else {
-      console.log("[PaymentMethod]", paymentMethod);
+      // console.log("[PaymentMethod]", paymentMethod);
       setCardError("")
     }
     // confirm payment
@@ -76,25 +76,25 @@ const CheckoutForm = ( {bookingInfo, closeModal, refetch} ) => {
     })
 
     if(confirmError){
-      console.log("confirmError", confirmError)
+      // console.log("confirmError", confirmError)
       setCardError(confirmError.message)
       processing(false)
       return
     }
 
     if(paymentIntent.status === "succeeded"){
-      console.log("paymentIntent", paymentIntent)
+      // console.log("paymentIntent", paymentIntent)
       const paymentInfo = {
         ...bookingInfo,
         roomId: bookingInfo._id,
-        transjactionId: paymentIntent.id,
+        transactionId: paymentIntent.id,
         date: new Date()
       }
       delete paymentInfo._id
-      console.log("paymentInfo", paymentInfo)
+      // console.log("paymentInfo", paymentInfo)
       try {
         const {data} = await axiosSecure.post('/booking', paymentInfo)
-        console.log("after payment booking", data)
+        // console.log("after payment booking", data)
 
         await axiosSecure.patch(`/room/status/${bookingInfo?._id}`,
           {status: true})
@@ -104,7 +104,7 @@ const CheckoutForm = ( {bookingInfo, closeModal, refetch} ) => {
         toast.success("Room booked successful!")
         navigate('/dashboard/my-bookings')
       } catch (error) {
-        console.log(error)
+        // console.log(error)
       }
   };
 

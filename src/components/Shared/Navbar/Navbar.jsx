@@ -20,7 +20,7 @@ const Navbar = () => {
   };
 
   const modalHandler = async () => {
-    console.log("I wanat to become a host");
+    // console.log("I wanat to become a host");
     try {
       const currentUser = {
         email: user?.email,
@@ -36,7 +36,7 @@ const Navbar = () => {
         );
       }
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       toast.error(error.message);
     } finally {
       closeModal();

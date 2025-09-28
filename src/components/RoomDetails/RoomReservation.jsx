@@ -21,7 +21,7 @@ const RoomReservation = ({ room, refetch }) => {
   const totalPrice =
     parseInt(differenceInCalendarDays(new Date(room.to), new Date(room.from))) *
     room?.price;
-  console.log("totalPrice", totalPrice);
+  // console.log("totalPrice", totalPrice);
 
   const closeModal = () => {
     setIsOpen(false);
@@ -41,7 +41,7 @@ const RoomReservation = ({ room, refetch }) => {
           showDateDisplay={false}
           editableDateInputs={true}
           onChange={(item) => {
-            console.log("onChange", item);
+            // console.log("onChange", item);
             setState([
               {
                 startDate: new Date(room.from),

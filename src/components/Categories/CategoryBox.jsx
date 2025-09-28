@@ -6,7 +6,7 @@ const CategoryBox = ({ label, icon: Icon }) => {
   const [params, setParams] = useSearchParams();
   // console.log('current params:', params.get('category'))
   const category = params.get("category");
-  console.log(category === label);
+  // console.log(category === label);
   const navigate = useNavigate();
 
   const handleClick = () => {

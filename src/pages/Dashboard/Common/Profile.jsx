@@ -29,7 +29,7 @@ const Profile = () => {
       toast.success("Profile updated successfully");
       return setIsOpen(false);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       toast.error("Failed to update profile");
     } finally {
       setLoading(false);
@@ -42,7 +42,7 @@ const Profile = () => {
       toast.success("Password reset email sent");
       return setIsOpenPassword(false);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       toast.error("Failed to send password reset email");
     } finally {
       setLoading(false);

@@ -27,7 +27,7 @@ const MyListings = () => {
       return data;
     },
     onSuccess: (data) => {
-      console.log(data)
+      // console.log(data)
       toast.success("Room deleted successfully");
       refetch()
     },
@@ -35,11 +35,11 @@ const MyListings = () => {
 
   //handle delete action
   const handleDelete = async (id) => {
-    console.log("Delete functionality not implemented yet", id);
+    // console.log("Delete functionality not implemented yet", id);
     try {
       await mutateAsync(id);
     } catch (error) {
-      console.log(error.message);
+      // console.log(error.message);
     }
   };
 

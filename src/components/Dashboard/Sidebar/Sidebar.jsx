@@ -16,7 +16,7 @@ const Sidebar = () => {
   const { logOut } = useAuth();
   const [toggle, setToggle] = useState(false);
   const [role, isLoading] = useRole();
-  console.log("role from sidebar", role);
+  // console.log("role from sidebar", role);
   const [isActive, setActive] = useState(false);
 
   // Sidebar Responsive Handler
@@ -28,7 +28,7 @@ const Sidebar = () => {
     // setToggle(event.target.checked);
     // console.log("Toggle value", event.target.checked);
     setToggle(!toggle);
-    console.log("Toggle value", !toggle);
+    // console.log("Toggle value", !toggle);
   };
 
 

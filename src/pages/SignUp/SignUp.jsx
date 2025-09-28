@@ -23,11 +23,11 @@ const SignUp = () => {
       setLoading(true);
       // Upload image ang get image url from imgbb
       const image_Url = await imageUpload(image)
-      console.log('data', image_Url)
+      // console.log('data', image_Url)
       
       // Create user with email and password
       const result = await createUser(email, password);
-      console.log("User created:", result.user);
+      // console.log("User created:", result.user);
 
       // Update user profile with name and image URL
       await updateUserProfile(name, image_Url)
@@ -35,7 +35,7 @@ const SignUp = () => {
       toast.success('User signup Successfuly')
     }
     catch (error) {
-      console.error("Error during signup:", error);
+      // console.error("Error during signup:", error);
       toast.error(error.message);
     }
   };

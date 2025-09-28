@@ -23,7 +23,7 @@ const AddRoom = () => {
   });
 
   const handleDates = (item) => {
-    console.log(item.selection);
+    // console.log(item.selection);
     setDates(item.selection);
   };
 
@@ -62,7 +62,7 @@ const AddRoom = () => {
 
     try {
       const image_url = await imageUpload(image);
-      console.log(image_url);
+      // console.log(image_url);
 
       const roomData = {
         location,
@@ -82,7 +82,7 @@ const AddRoom = () => {
       await mutateAsync(roomData)
 
     } catch (error) {
-      console.log(error.message)
+      // console.log(error.message)
       toast.error("Failed to add room data");
       setLoading(false);
     }

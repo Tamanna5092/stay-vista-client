@@ -19,7 +19,7 @@ const BookingDataRow = ({ booking, refetch }) => {
       return data;
     },
     onSuccess: async (data) => {
-      console.log(data);
+      // console.log(data);
       toast.success("Booking cancle successfully");
       refetch();
 
@@ -32,11 +32,11 @@ const BookingDataRow = ({ booking, refetch }) => {
 
   //handle delete action
   const handleDelete = async (id) => {
-    console.log("Delete functionality not implemented yet", id);
+    // console.log("Delete functionality not implemented yet", id);
     try {
       await mutateAsync(id);
     } catch (error) {
-      console.log(error.message);
+      // console.log(error.message);
     }
   };
 

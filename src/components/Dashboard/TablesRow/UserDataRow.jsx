@@ -17,7 +17,7 @@ const UserDataRow = ({ user, refetch }) => {
         onSuccess: (data) => {
             refetch()
             toast.success('User updated successfully')
-            console.log("data from mutation", data)
+            // console.log("data from mutation", data)
             setIsOpen(false)
         }
     })
@@ -27,7 +27,7 @@ const UserDataRow = ({ user, refetch }) => {
             toast.error('Action Not Allowed')
             return setIsOpen(false)
         }
-        console.log("Modal handler updated", selected)
+        // console.log("Modal handler updated", selected)
         if (user?.status === 'Verified'){
             return toast.error('Cannot change role of a verified user')
         }
@@ -35,7 +35,7 @@ const UserDataRow = ({ user, refetch }) => {
             role: selected,
             status: 'Verified'
         }
-        console.log("user to be updated", user)
+        // console.log("user to be updated", user)
         try {
             const data = await mutateAsync(userRole)
         } catch (error) {
